@@ -1,3 +1,5 @@
+package main.java;
+
 /**
  * Purpose of this class is to start application and keep it opened while the user needs it.
  */
@@ -29,7 +31,21 @@ public class Starter {
     private boolean processCommand(String inputFromUser) {
         switch (inputFromUser) {
             case "1":
-                screenWriter.headerAllBarsShow();
+                barDatabase.allBarsShow();
+                return true;
+            case "2":
+                barDatabase.compareByProtein();
+                screenWriter.headerSortByProtein();
+                barDatabase.allBarsShow();
+                return true;
+            case "3":
+                barDatabase.compareByFat();
+                screenWriter.headerSortByFat();
+                barDatabase.allBarsShow();
+                return true;
+            case "4":
+                barDatabase.filterByFiber();
+                screenWriter.headerFilterByFiber();
                 barDatabase.allBarsShow();
                 return true;
             case "0":
