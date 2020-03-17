@@ -14,18 +14,19 @@ public class Bar {
     private double fiber;
     private int reviewerCount;
 
-    public Bar(String name, double fat, double energy, double kolhydrat, double protein, double fiber) {
+    public Bar(String name, double fat, double energy, double kolhydrat, double protein, double fiber, int reviewerCount) {
         this.fat = fat;
         this.name = name;
         this.energy = energy;
         this.kolhydrat = kolhydrat;
         this.protein = protein;
         this.fiber = fiber;
-        reviewerCount = 0;
+        this.reviewerCount = reviewerCount;
     }
 
     public String getName(){
-        String returnName = name + "\t\t" + energy  + "\t\t" + kolhydrat  + "\t\t" + protein  + "\t\t" + fiber + "\t\t" + fat;
+        String returnName = name + "\t\t" + energy  + "\t\t" + kolhydrat  + "\t\t" + protein  + "\t\t" + fiber +
+                "\t\t" + fat + "\t\t" + reviewerCount;
         return returnName;
     }
 
@@ -43,5 +44,10 @@ public class Bar {
     {
         return fiber;
     }
+
+    public int getReviewerCount(){
+        return reviewerCount;
+    }
+
 
 }
