@@ -85,9 +85,8 @@ public class Database{
 
             NodeList children = root.getElementsByTagName("bar");
 
-            for (int counter = 0; counter < 6; counter ++) {
+            for (int counter = 0; counter < children.getLength(); counter ++) {
 
-                //children.getLength()
                 NodeList grandGrandChildren = null;
                 int iterator = 0;
                 int reviewerCount = 0;

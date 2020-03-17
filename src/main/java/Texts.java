@@ -8,7 +8,7 @@ public class Texts {
     public void welcomeScreen()
     {
         System.out.println( "Welcome!\n" +
-                "Our application provides the most comprehensive list of bars.\n" +
+                "This application provides the most comprehensive list of bars.\n" +
                 "To see them, just follow the instructions in the menu.\n");
         menuScreen();
     }
@@ -29,7 +29,7 @@ public class Texts {
 
     public void wrongMenuInput()
     {
-        System.out.println("I don't understand. You can choose between options 1, 2, 3, 4 and 0.");
+        System.out.println("I don't understand. You can choose between options 1, 2, 3, 4, 5 and 0.");
     }
     public void exitScreen()
     {
@@ -37,20 +37,20 @@ public class Texts {
     }
     public void headerAllBarsShow()
     {
-        System.out.println("list of all bars in the database contains:\n" +
+        System.out.println("list of bars in the database contains:\n" +
                             "name\t\tenergy\t\tkolhydrat\tprotein\t\tfiber\t\tfat\t\tcount of reviewers");
     }
     public void headerSortByProtein(){
-        System.out.println("When sorting by highest protein content,");
+        System.out.println("After sorting by highest protein content,");
     }
     public void headerSortByFat(){
-        System.out.println("When sorting by highest fat content,");
+        System.out.println("After sorting by highest fat content,");
     }
     public void headerFilterByFiber(){
-        System.out.println("When sorting by highest fiber content,");
+        System.out.println("After removing the bars above the provided value for fiber and sorting by highest fiber content,");
     }
-    public void writeFilterValue(){
-        System.out.println("Write value to filter the result:");
+    public void headerFilterByProtein(){
+        System.out.println("After removing the bars under the provided value for protein and selecting just the right amount of reviewers");
     }
     public void writeFiberValue(){
         System.out.println("Write me what is your fiber limit:");
