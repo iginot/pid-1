@@ -91,7 +91,7 @@ public class Starter {
                     return true;
                 }
                 barDatabase.filterByProtein(filteredValue, reviewerCount);
-                screenWriter.headerFilterByFiber();
+                screenWriter.headerFilterByProtein();
                 barDatabase.filteredBarsShow();
                 return true;
             case "0":
