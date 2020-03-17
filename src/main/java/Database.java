@@ -11,15 +11,18 @@ import java.util.List;
 
 /**
  * Purpose of this class is to host a database of protein bars.
+ * It also provides methods to create it and access it.
  */
 
 public class Database{
 
-    private ArrayList<Bar> database;
+    private List<Bar> database;
+    private List<Bar> filteredDatabase;
     private Texts screenWriter;
 
     public Database() {
         database = new ArrayList<Bar>();
+        filteredDatabase = new ArrayList<Bar>();
         screenWriter = new Texts();
         readFile();
     }
@@ -32,22 +35,40 @@ public class Database{
         }
     }
 
-    public void compareByProtein(){
+    public void filteredBarsShow(){
+        screenWriter.headerAllBarsShow();
+        for (Bar bar : filteredDatabase)
+        {
+            System.out.println(bar.getName());
+        }
+    }
+
+    public void sortByProtein(){
         Comparator<Bar> compareByProtein = (Bar b1, Bar o2) ->
                 b1.getProtein().compareTo( o2.getProtein() );
         Collections.sort(database, compareByProtein.reversed());
     }
 
-    public void compareByFat(){
+    public void sortByFat(){
         Comparator<Bar> compareByFat = (Bar b1, Bar o2) ->
                 b1.getFat().compareTo( o2.getFat() );
         Collections.sort(database, compareByFat.reversed());
     }
 
-    public void filterByFiber(){
+    public void sortByFiber(){
         Comparator<Bar> compareByFiber = (Bar b1, Bar o2) ->
                 b1.getFiber().compareTo( o2.getFiber() );
-        Collections.sort(database, compareByFiber.reversed());
+        Collections.sort(filteredDatabase, compareByFiber.reversed());
+    }
+
+    public void filterByFiber(double filteredValue){
+        filteredDatabase = database.stream()
+                .filter(p -> p.getFiber() < filteredValue).collect(Collectors.toList());
+    }
+
+    public void filterByProtein(double proteinContent, int reviewerCount) {
+        filteredDatabase = database.stream()
+                .filter(p -> p.getProtein() > proteinContent && p.getReviewerCount() == reviewerCount).collect(Collectors.toList());
     }
 
     public void readFile()
@@ -57,7 +78,7 @@ public class Database{
         try {
 
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new File("/Users/igortruchlik/PID-exercises/E1/pid-exercise-1/bars.xml"));
+            Document document = builder.parse(new File("../bars.xml"));
 
             document.getDocumentElement().normalize();
             Element root = document.getDocumentElement();
@@ -67,7 +88,26 @@ public class Database{
             for (int counter = 0; counter < 6; counter ++) {
 
                 //children.getLength()
+                NodeList grandGrandChildren = null;
+                int iterator = 0;
+                int reviewerCount = 0;
+
                 Element eJElement = (Element) children.item(counter);
+
+                NodeList grandchildren = children.item(counter).getChildNodes();
+                while(!grandchildren.item(iterator).getNodeName().equals("review") && iterator < grandchildren.getLength())
+                {
+                    iterator++;
+                }
+                if (grandchildren.item(iterator).getNodeName().equals("review")){
+                    grandGrandChildren = grandchildren.item(iterator).getChildNodes();
+                }
+
+                for (int count = 0; count < grandGrandChildren.getLength(); count++){
+                    if(grandGrandChildren.item(count).getNodeName().equals("reviewer")){
+                        reviewerCount++;
+                    }
+                }
 
                 String name = eJElement.getAttribute("SN");
                 String fat = eJElement.getElementsByTagName("fett").item(0).getTextContent();
@@ -82,13 +122,12 @@ public class Database{
                 Double proteinDouble = Double.valueOf(protein);
                 Double fiberDouble = Double.valueOf(fiber);
 
-                Bar newBar = new Bar(name, fatDouble, energyDouble, kolhydratDouble, proteinDouble, fiberDouble);
+                Bar newBar = new Bar(name, fatDouble, energyDouble, kolhydratDouble, proteinDouble, fiberDouble, reviewerCount);
                 database.add(newBar);
-
             }
         } catch(Exception e)
-        {}
-
+        {
+            screenWriter.XMLloadFailed();
+        }
     }
-
 }
